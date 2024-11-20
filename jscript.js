@@ -1,7 +1,5 @@
 const container = document.querySelector(".container");
-
-let gridSize = 16; //adjust this
-let cellSize = (100 / gridSize) + '%'; // cellsize is percentage from 100 / gridsize so that divs are equally sized
+const btn = document.querySelector("button");
 
 function randomColor() {
     //generate random values for red, green, and blue components between 0 and 255
@@ -13,7 +11,9 @@ function randomColor() {
     return bgColor;
 }
 
-function createGrid() {
+function createGrid(gridSize = 16) {
+    let cellSize =  (100 / gridSize) + '%'; // cellsize is percentage from 100 / gridsize so that divs are equally sized
+
     for (let i = 0; i < gridSize * gridSize; i++) { //creates divs that equal to gridsize^2
         let gridCell = document.createElement('div');
         gridCell.style.width = cellSize;
@@ -21,9 +21,27 @@ function createGrid() {
 
         container.appendChild(gridCell);
 
-        gridCell.addEventListener('mouseover', () => { //dom event when hovering, change cell to random color
+        gridCell.addEventListener('mouseover', () => { //dom event when hovering, change cell to random color by calling getting rgb value from randomcolor()
             gridCell.style.backgroundColor = randomColor();
         });
+    }
+}
+
+btn.addEventListener("click", () => changeGridSize());
+
+function changeGridSize() {
+    container.innerHTML = "";
+    let newSize = prompt("Change grid size:");
+    
+    if (!newSize){
+        createGrid();
+    }
+    else if (newSize > 100){
+        alert("Input should be a maximum of 100");
+        changeGridSize();
+    }
+    else {
+        createGrid(newSize);
     }
 }
 
