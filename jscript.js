@@ -23,6 +23,10 @@ function createGrid(gridSize = 16) {
 
         gridCell.addEventListener('mouseover', () => { //dom event when hovering, change cell to random color by calling getting rgb value from randomcolor()
             gridCell.style.backgroundColor = randomColor();
+            let currentOpacity = parseFloat(gridCell.style.opacity) || 0 //default to 0
+            if (currentOpacity < 1) {
+                gridCell.style.opacity = currentOpacity + 0.1; //increment opacity
+            }
         });
     }
 }
